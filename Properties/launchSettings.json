@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EdhesiveAggregator": {
+      "commandName": "Project",
+      "commandLineArgs": "CS201_Coding_in_Python_1_20-21_-1st_Period_-_Python_1.csv"
+    }
+  }
+}
