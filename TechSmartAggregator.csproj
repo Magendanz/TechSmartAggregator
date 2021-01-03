@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="CsvTools" Version="1.0.12" />
-    <PackageReference Include="CsvTools.Excel" Version="1.0.2" />
   </ItemGroup>
 
 </Project>
