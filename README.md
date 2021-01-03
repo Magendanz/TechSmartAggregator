@@ -3,7 +3,7 @@ Consolidate quizzes and assignments from TechSmart gradebook
 
 Usage: TechSmartAggregator <file.csv>
 
-New aggreated CSV file is output to Output subdirectory.
+New aggregated CSV file is output to Output subdirectory.
 
 Completes the following batch tasks:
 * Removes empty columns
@@ -11,5 +11,6 @@ Completes the following batch tasks:
 * Aggregates all Homework assignments by lesson number
 * Cleans up all Assessments to show only score
 * Preserves total points possible in header
+* Automatically opens new file in Excel
 
 What results is a much cleaner grade book that's easily entered in Synergy
