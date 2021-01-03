@@ -11,12 +11,12 @@ namespace TechSmartAggregator
     {
         static void Main(string[] args)
         {
-            var filename = args[0];
-            if (String.IsNullOrEmpty(filename))
+            if (args.Length == 0)
             {
                 Console.WriteLine("Usage: TechSmartAggregator <file.csv>");
                 return;
             }
+            var filename = args[0];
 
             // Load CSV file that has been exported from TechSmart Gradebook
             var dt = DataTable.New.ReadCsv(filename);
