@@ -14,7 +14,7 @@ namespace TechSmartAggregator
             var filename = args[0];
             if (String.IsNullOrEmpty(filename))
             {
-                Console.WriteLine("Usage: TechSmartAggregator <file>");
+                Console.WriteLine("Usage: TechSmartAggregator <file.csv>");
                 return;
             }
 
