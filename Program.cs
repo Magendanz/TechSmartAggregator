@@ -64,11 +64,9 @@ namespace TechSmartAggregator
         static void RemoveEmptyColumns(MutableDataTable dt)
         {
             var names = new List<string>();
-            foreach (var col in dt.Columns)
-                if (col.Values.Count(c => !String.IsNullOrEmpty(c)) <= 4)       // First 4 rows are just header
-                    names.Add(col.Name);
-
-            dt.DeleteColumns(names.ToArray());
+            for (int i = dt.Columns.Length - 1; i > 0; i--)
+                if (dt.Columns[i].Values.Count(c => !String.IsNullOrEmpty(c)) <= 4)       // First 4 rows are just header
+                    dt.DeleteColumn(i);
         }
 
         static void AggregateColumns(MutableDataTable dt, string filter)

@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "EdhesiveAggregator": {
+    "TechSmartAggregator": {
       "commandName": "Project",
-      "commandLineArgs": "CS201_Coding_in_Python_1_20-21_-1st_Period_-_Python_1.csv"
+      "commandLineArgs": "\"CS201_Coding_in_Python_1_20-21_-1st_Period (2021-12-16).csv\""
     }
   }
 }
