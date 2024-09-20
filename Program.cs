@@ -24,9 +24,8 @@ namespace TechSmartAggregator
             dt.DeleteColumn(2);     // We don't care about the student email address
             FixColumnHeaders(dt);
             RemoveEmptyColumns(dt);
-            AggregateColumns(dt, "Classwork");
-            AggregateColumns(dt, "Homework");
-            ReduceColumns(dt, "Assessment");
+            AggregateAssignments(dt, "Classwork", "Warm Up", "Instruction", "Instruction Practice", "Teacher Code Planning", "Teacher Code Writing", "Student Code Planning", "Student Code Writing", "Student Code Debug", "Lesson Notes");
+            ReduceColumns(dt, "Lesson Check", "Assessment");
 
             // Save result and open with Excel
             dt.SaveCSV(@$"Output\{filename}");
@@ -39,7 +38,7 @@ namespace TechSmartAggregator
 
             foreach (var col in dt.Columns)
             {
-                if (!String.IsNullOrWhiteSpace(col.Values[2]))
+                if (!string.IsNullOrWhiteSpace(col.Values[2]))
                 {
                     // Get latest unit and lesson
                     var matches = Regex.Matches(col.Name, @$"Unit (\d+):");
@@ -54,6 +53,8 @@ namespace TechSmartAggregator
                     col.Name = col.Values[1];
                     if (!col.Name.StartsWith(prefix))
                         col.Name = prefix + col.Name;
+                    while (dt.ColumnNames.Count(i => i == col.Name) > 1)
+                        col.Name += " ";
 
                     // We'll use this for LINQ grouping later
                     col.Values[1] = prefix;
@@ -65,14 +66,14 @@ namespace TechSmartAggregator
         {
             var names = new List<string>();
             for (int i = dt.Columns.Length - 1; i > 0; i--)
-                if (dt.Columns[i].Values.Count(c => !String.IsNullOrEmpty(c)) <= 4)       // First 4 rows are just header
+                if (dt.Columns[i].Values.Count(c => !string.IsNullOrEmpty(c)) <= 4)       // First 4 rows are just header
                     dt.DeleteColumn(i);
         }
 
-        static void AggregateColumns(MutableDataTable dt, string filter)
+        static void AggregateAssignments(MutableDataTable dt, params string[] categories)
         {
             // Filter down to the assignment types of interest
-            var cols = dt.Columns.Where(c => c.Values[2] == filter);
+            var cols = dt.Columns.Where(c => categories.Contains(c.Values[2]));
 
             // Group by lesson number
             var groups = cols.GroupBy(c => c.Values[1]);
@@ -80,7 +81,7 @@ namespace TechSmartAggregator
             foreach (var group in groups)
             {
                 var first = group.First();
-                first.Name = $"{group.Key} {filter}";
+                first.Values[2] = "Assignments";
                 for (int i = 4; i < first.Values.Count(); i++)
                 {
                     // Set number of assignments completed for each student
@@ -119,10 +120,10 @@ namespace TechSmartAggregator
             return 0;
         }
 
-        static void ReduceColumns(MutableDataTable dt, string filter)
+        static void ReduceColumns(MutableDataTable dt, params string[] categories)
         {
             // Filter down to the assignment types of interest
-            var cols = dt.Columns.Where(c => c.Values[2] == filter);
+            var cols = dt.Columns.Where(c => categories.Contains(c.Values[2]));
 
             // Parse scores for each column to simplify presentation
             foreach (var col in cols)
@@ -138,7 +139,7 @@ namespace TechSmartAggregator
                         col.Values[3] = match.Groups[2].Value;      // Save denominoator in header
                     }
                     else
-                        col.Values[i] = String.Empty;       // We don't care about other states like "In progress"
+                        col.Values[i] = string.Empty;       // We don't care about other states like "In progress"
                 }
             }
         }
