@@ -24,7 +24,7 @@ namespace TechSmartAggregator
             dt.DeleteColumn(2);     // We don't care about the student email address
             FixColumnHeaders(dt);
             RemoveEmptyColumns(dt);
-            AggregateAssignments(dt, "Classwork", "Warm Up", "Instruction", "Instruction Practice", "Teacher Code Planning", "Teacher Code Writing", "Student Code Planning", "Student Code Writing", "Student Code Debug", "Lesson Notes");
+            AggregateAssignments(dt, "Classwork", "Warm Up", "Instruction", "Instruction Practice", "Teacher Code Planning", "Teacher Code Writing", "Student Code Planning", "Student Code Writing", "Student Code Debug", "Student Code Restructure", "Coding Technique Demo", "Coding Technique Practice", "Lesson Notes");
             ReduceColumns(dt, "Lesson Check", "Assessment");
 
             // Save result and open with Excel
